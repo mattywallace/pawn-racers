@@ -54,8 +54,8 @@ body{
 
 
 .pawnImage{
-	width: 40pt;
-	height:40pt;
+	width: 20pt;
+	height:20pt;
 	cursor: pointer;
 	display: center;
 }
