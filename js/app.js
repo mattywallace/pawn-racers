@@ -16,6 +16,7 @@ const game = {
 
 
 
+
     pushSpaces: function() {
         let spaces = document.querySelectorAll('.imageContainer')
         for (let i = 0; i < spaces.length; i++) {
@@ -111,8 +112,8 @@ const game = {
 
 
 
+let player1met = document.querySelector('.playerOneMet')
 
-let playerOneMet = document.getElementById('playerOneMet')
 let board = document.querySelector('.board')
 console.log(board);
 
@@ -221,9 +222,9 @@ document.querySelectorAll('.blackPawn').forEach (item => {
 document.querySelectorAll('.blackPawn').forEach (item => {
     item.addEventListener('drop', event => {
         event.preventDefault();
-        game.attackedPawn = event.target
-        game.attackedPawn.remove()
-        playerOneMet.appendChild(game.attackedPawn)
+        game.capturedBlackPeices = event.target
+        game.capturedBlackPeices.remove()
+        player1met.appendChild(game.capturedBlackPeices)
     })  
 })
 
