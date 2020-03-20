@@ -11,6 +11,8 @@ const game = {
 		whitePawns:[],
  		blackPawns:[],
  		board:[],
+ 		
+ 	
 		
 		
 
@@ -64,10 +66,6 @@ const game = {
 			row2Space6.appendChild(game.whitePawns[5])
 			row2Space7.appendChild(game.whitePawns[6])
 			row2Space8.appendChild(game.whitePawns[7])
-	
-
-
-	/////////////////////////////////////////////////////////////// Whites pawn vs black pawns 
 			let row7Space1 = document.getElementById('space9')
 			let row7Space2 = document.getElementById('space10')
 			let row7Space3 = document.getElementById('space11')
@@ -85,47 +83,33 @@ const game = {
 			row7Space7.appendChild(game.blackPawns[6])
 			row7Space8.appendChild(game.blackPawns[7])
 			
-		}
-			
+		},
 
+		captureWhite: function(){
+			console.log('caputured white')
 
-
-			
-
-
-
-			
+		},
 		
+		captureBlack: function (){
+			console.log('captured black')
 
 
-			
+		},
+		
+			Winner: function (){
+			console.log('youwin');
+		},
+
+	}
 
 
 
 
 
-
-				
-				
-
-
-
+	
 			
 	
- 	
-		
 
-		
-		
-
-
- 	
-
-
-
-}
-	
-	
  	let gameReset = document.getElementById('newGame') 
 	gameReset.addEventListener('click', (event) => {
 			game.pushSpaces();
@@ -134,41 +118,30 @@ const game = {
 			game.setBoard();
 			console.log('DORK')
 	})	
-		
-			
-			
-
-
+	
 
 	document.addEventListener('dragstart', (event) => {
-		if(event.target && event.target.classList.contains('pawnImage') ){
+		if(event.target && event.target.classList.contains('pawnImage')){
 			game.currentPawn = event.target 
-			console.log(game.currentPawn);
-
+			console.log(`dragstart pawn: ${game.currentPawn}`);
 		}
 	})
-
-			
-		
-			
-	
 
 		
 	document.addEventListener('dragend', (event) => {
 		if(event.target && event.target.classList.contains('pawnImage')){
-			// game.currentPawn.classList.remove('dissapear')
-			// game.currentPawn.classList.add('pawnImage')
+			game.currentPawn.classList.remove('dissapear')
+			game.currentPawn.classList.add('pawnImage')
 
 		}
 	})
 
 
-
-
 	document.addEventListener('dragover', (event) => { 
-			event.preventDefault()
 		if(event.target && event.target.classList.contains('imageContainer')) {
+			event.preventDefault()
 			game.currentSquare = event.target
+			console.log(`dragover square: ${event.target}`)
 			
 		}
 	})
@@ -177,8 +150,8 @@ const game = {
 	
 	document.addEventListener('dragenter' ,(event) => {		
 		if(event.target && event.target.classList.contains('imageContainer')){
-			// console.log("inside an image container");
 			event.preventDefault();
+			// console.log("inside an image container");
 			game.currentSquare = event.target
 			// game.currentSquare.classList.add('hovered');
 			// console.log("game.currentSquare in dragEnter, should contain hovered", game.currentSquare)			
@@ -194,11 +167,82 @@ const game = {
 			
 	document.addEventListener('drop', (event) => {
 		// console.log("here is event.target in drop", event.target);
-		if(event.target && event.target.classList.contains('imageContainer')){
-			event.preventDefault();
-			game.currentSquare.appendChild(game.currentPawn)
+		if (event.target.classList.contains('imageContainer')){
+				event.preventDefault();
+				console.log(game.currentSquare)
+				console.log(`drop pawn: ${game.currentPawn}`)
+				game.currentSquare.appendChild(game.currentPawn)
+		if (game.currentPawn.classList.contains('whitePawn') && event.target.classList.contains('blackPawn')){
+				game.captureWhite();
 		}
-	})
+		if (game.currentPawn.classList.contains('blackPawn') && event.target.classList.contains('whitePawn')){
+				game.captureBlack();
+		}
+		if (game.currentPawn.classList.contains('whitePawn') && event.target.classList.contains('whiteWinner')){
+				game.Winner();
+		}
+		if (game.currentPawn.classList.contains('blackPawn') && event.target.classList.contains('blackWinner')){
+				game.Winner();
+		}
+	}
+})
+
+				
+
+
+
+
+
+
+
+
+
+
+
+			
+
+
+
+			
+		
+
+
+			
+
+
+
+
+
+
+				
+				
+
+
+
+			
+	
+ 	
+		
+
+		
+		
+
+
+ 	
+
+
+
+	
+	
+			
+		
+			
+			
+
+
+
+			
+		
 			
 
 			
