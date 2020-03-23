@@ -6,8 +6,6 @@ const game = {
 
     player1Turn: true,
     currentPawn: null,
-    dropZone: null,
-    occupiedSquares: [],
     whitePawns: [],
     blackPawns: [],
     board: [],
@@ -32,12 +30,12 @@ const game = {
         let whitePawns = document.querySelectorAll('.whitePawn')
         for (let i = 0; i < whitePawns.length; i++) {
             whitePawns[i].id = (`whitePawn${i + 1}`)
-            console.log(typeof game.whitePawns)
             game.whitePawns.push(whitePawns[i])
         }
-
     },
 
+
+            
     pushBlackPawns: function() {
         let blackPawns = document.querySelectorAll('.blackPawn')
         for (let i = 0; i < blackPawns.length; i++) {
@@ -83,25 +81,60 @@ const game = {
         row7Space6.appendChild(game.blackPawns[5])
         row7Space7.appendChild(game.blackPawns[6])
         row7Space8.appendChild(game.blackPawns[7])
+        game.player1Turn = true 
+        game.blackPawns.draggable = 'false'
+        game.indicatePlayerTurn();
 
+
+    },
+
+    indicatePlayerTurn: function (){
+        let indicator = document.createElement('div')
+        
+        let docBody = document.querySelector('body')
+        let whitePawn = document.querySelectorAll('.whitePawn')
+        let blackPawn = document.querySelectorAll('.blakcPawn')
+        if (game.player1Turn === true){
+            blackPawn.draggable = 'false' 
+            indicator.innerText = 'The Virus is Attacking'
+            indicator.remove();
+            docBody.appendChild(indicator)
+        }
+        if (game.player1Turn !== true){
+            whitePawn.draggable = 'false' 
+            indicator.innerText = 'The Soap is Attacking'
+            docBody.appendChild(indicator)
+            
+        }
+
+    },
+
+            
+    emptyArray: function (){
+        game.board = []
+        capturedBlackPeices = null
+        captureWhitePeices = null 
+        player1Turn = true
 
     },
 
 
 
-    // captureWhite: function(){
-    // 	console.log('caputured white')
-
-    // },
+    
 
     captureBlack: function (){
-    	console.log('captured black')
+    console.log('captured black')
 
 
     },
 
-    Winner: function() {
-        console.log('you win');
+    winner: function() {
+        if(game.currentPawn.classList.contains('blackPawn')){
+            alert('Congrats Soap. You have given us all hope we may again be rid of covid')
+        }
+        if(game.currentPawn.classList.contains('whitePawn')){
+            alert('Congrats Covid, you kept us inside foreverrrrrrr......')
+        }
     },
 
 
@@ -125,6 +158,7 @@ gameReset.addEventListener('click', (event) => {
     game.pushWhitePawns();
     game.pushBlackPawns();
     game.setBoard();
+    game.emptyArray();
     console.log('DORK')
 })
 
@@ -193,9 +227,28 @@ document.querySelectorAll('.imageContainer').forEach (item => {
     item.addEventListener('drop', event => {
         event.preventDefault();
         game.currentSquare = event.target
+        if(game.currentSquare.classList.contains('blackWinner') && game.currentPawn.classList.contains('blackPawn')){
+            game.winner()
+        }
+        if(game.currentSquare.classList.contains('whiteWinner') && game.currentPawn.classList.contains('whitePawn')){
+            game.winner()
+        }
         game.currentSquare.appendChild(game.currentPawn)
+        if(game.currentPawn.classList.contains('whitePawn')){
+            game.player1Turn = false 
+            game.indicatePlayerTurn();
+        }
+        if(game.currentPawn.classList.contains('blackPawn')){
+            game.player1Turn = true 
+            game.indicatePlayerTurn();
+        }
+        
+        })
     })
-})
+
+
+
+
 
 document.querySelectorAll('.blackPawn').forEach (item => {
     item.addEventListener('dragover', event => {
@@ -227,6 +280,8 @@ document.querySelectorAll('.blackPawn').forEach (item => {
         game.currentSquare = event.currentTarget
         game.currentSquare.appendChild(game.currentPawn)
         player1met.appendChild(game.capturedBlackPeices)
+        game.player1Turn = false
+        game.indicatePlayerTurn();
     })  
 })
 
@@ -260,6 +315,7 @@ document.querySelectorAll('.whitePawn').forEach (item => {
         game.currentSquare = event.currentTarget
         game.currentSquare.appendChild(game.currentPawn)
         player1met.appendChild(game.capturedWhitePeices)
+        game.player1Turn = true 
     })  
 })
 
