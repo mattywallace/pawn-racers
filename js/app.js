@@ -129,19 +129,42 @@ gameReset.addEventListener('click', (event) => {
 
 
 
+document.querySelectorAll('.blackPawn').forEach (item => {
+    item.addEventListener('dragstart', event => {
+        console.log('listenerWorking')
+        game.currentPawn = event.target
+    })
 
-   
 
+})
+
+document.querySelectorAll('.blackPawn').forEach (item => {
+    item.addEventListener('dragend', event => {
+        console.log('listener Working')
+        game.currentPawn = event.target
+    })
+
+})
+
+
+
+document.querySelectorAll('.whitePawn').forEach (item => {
+    item.addEventListener('dragstart', event => {
+        console.log('listener Working')
+        game.currentPawn = event.target
+    })
+
+})
+
+    document.querySelectorAll('.whitePawn').forEach (item => {
+    item.addEventListener('dragend', event => {
+        console.log('listenerWorking')
+        game.currentPawn = event.target
+    })
+
+
+})
  
-
-    
-
-
-
-
-
-
-
 
 document.querySelectorAll('.imageContainer').forEach (item => {
     item.addEventListener('dragover', event => {
@@ -173,30 +196,6 @@ document.querySelectorAll('.imageContainer').forEach (item => {
     })
 })
 
-
-document.querySelectorAll('.blackPawn').forEach (item => {
-	item.addEventListener('dragstart', event => {
-		console.log('listenerWorking')
-        game.currentPawn = event.target
-	})
-
-
-})
-
-
-document.querySelectorAll('.whitePawn').forEach (item => {
-    item.addEventListener('dragstart', event => {
-        console.log('listenerWorking')
-        game.currentPawn = event.target
-    })
-
-
-})
-
-
-
-
-			
 document.querySelectorAll('.blackPawn').forEach (item => {
     item.addEventListener('dragover', event => {
         event.preventDefault();
@@ -224,9 +223,14 @@ document.querySelectorAll('.blackPawn').forEach (item => {
         event.preventDefault();
         game.capturedBlackPeices = event.target
         game.capturedBlackPeices.remove()
+        game.currentSquare = event.currentTarget
+        game.currentSquare.appendChild(game.currentPawn)
         player1met.appendChild(game.capturedBlackPeices)
     })  
 })
+
+
+
 
 
 
