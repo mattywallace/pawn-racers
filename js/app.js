@@ -12,6 +12,7 @@ const game = {
     blackPawns: [],
     board: [],
     capturedBlackPeices: null,
+    captureWhitePeices: null,
 
 
 
@@ -229,7 +230,38 @@ document.querySelectorAll('.blackPawn').forEach (item => {
     })  
 })
 
+document.querySelectorAll('.whitePawn').forEach (item => {
+    item.addEventListener('dragover', event => {
+        event.preventDefault();
+        game.attackedPawn = event.target
+    })
+})
 
+
+document.querySelectorAll('.whitePawn').forEach (item => {
+    item.addEventListener('dragenter', event => {
+        event.preventDefault();
+        game.attackedPawn = event.target
+    })
+})
+
+document.querySelectorAll('.whitePawn').forEach (item => {
+    item.addEventListener('dragleave', event => {
+        game.attackedPawn = event.target
+        
+    })
+})
+
+document.querySelectorAll('.whitePawn').forEach (item => {
+    item.addEventListener('drop', event => {
+        event.preventDefault();
+        game.capturedWhitePeices = event.target
+        game.capturedWhitePeices.remove()
+        game.currentSquare = event.currentTarget
+        game.currentSquare.appendChild(game.currentPawn)
+        player1met.appendChild(game.capturedWhitePeices)
+    })  
+})
 
 
 
